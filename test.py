@@ -1,25 +1,35 @@
-import threading
-import time
+import pygame
 
 
-def print1():
-    print("print1")
+class Game(object):
+    def __init__(self):
+        pygame.init()
+        pygame.font.init()
+        self.screen = pygame.display.set_mode((200, 200))
+        pygame.display.set_caption("tic-tac-toe online")
+        self.clock = pygame.time.Clock()
+
+    def run(self):
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                    break
+
+            self.screen.fill((255, 255, 255))
+
+            keys = pygame.key.get_pressed()
+            for i in range(97, 123):
+                if keys[i]:
+                    print(pygame.key.name(i))
+
+            pygame.display.flip()
+            self.clock.tick(30)
+
+    pygame.quit()
 
 
-def input1():
-    time.sleep(1)
-    input("input1")
-
-
-def print2():
-    time.sleep(2)
-    print("print2")
-
-
-thr1 = threading.Thread(target=print1)
-thr2 = threading.Thread(target=input1)
-thr3 = threading.Thread(target=print2)
-
-thr1.start()
-thr2.start()
-thr3.start()
+if __name__ == '__main__':
+    game = Game()
+    game.run()
